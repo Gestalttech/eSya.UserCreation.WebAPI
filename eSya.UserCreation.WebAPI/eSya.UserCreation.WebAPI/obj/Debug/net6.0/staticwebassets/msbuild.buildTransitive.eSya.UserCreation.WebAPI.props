@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\eSya.UserCreation.WebAPI.props" />
+</Project>

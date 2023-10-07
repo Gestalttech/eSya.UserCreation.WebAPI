@@ -1,0 +1,17 @@
+{
+  "W0125": "Already Exist",
+  "W0126": "Not Found",
+  "W0111": "Login ID is already Exist",
+  "W0118": "Mobile Number is already Exist",
+  "W0127": "Email ID is already Exist",
+  "W0112": "User ID is not Exist",
+  "W0128": "Mobile Number is already Exist with Different Login ID",
+  "W0129": "Email ID is already Exist with Different Login ID",
+  "S0001": "Saved Sucessfully",
+  "S0002": "Updated Sucessfully",
+  "S0003": "Activated Successfully",
+  "S0004": "De Activated Successfully",
+  "S0005": "Deleted Sucessfully",
+  "S0006": "User Authenticated Successfully",
+  "S0007": "User Deactivated Successfully"
+}

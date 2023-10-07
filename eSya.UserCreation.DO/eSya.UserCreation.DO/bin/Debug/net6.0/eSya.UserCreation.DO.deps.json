@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "eSya.UserCreation.DO/1.0.0": {
+        "runtime": {
+          "eSya.UserCreation.DO.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "eSya.UserCreation.DO/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
