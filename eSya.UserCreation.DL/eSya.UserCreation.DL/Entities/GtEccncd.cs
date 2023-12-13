@@ -10,8 +10,8 @@ namespace eSya.UserCreation.DL.Entities
         public string CountryName { get; set; } = null!;
         public string CountryFlag { get; set; } = null!;
         public string CurrencyCode { get; set; } = null!;
-        public string? MobileNumberPattern { get; set; }
-        public string? Nationality { get; set; }
+        public string MobileNumberPattern { get; set; } = null!;
+        public int Nationality { get; set; }
         public bool IsPoboxApplicable { get; set; }
         public string? PoboxPattern { get; set; }
         public bool IsPinapplicable { get; set; }

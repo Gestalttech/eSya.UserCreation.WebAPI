@@ -7,14 +7,13 @@ namespace eSya.UserCreation.DL.Entities
     {
         public GtEcapcd()
         {
-            GtEuusgrUserGroupNavigations = new HashSet<GtEuusgr>();
-            GtEuusgrUserTypeNavigations = new HashSet<GtEuusgr>();
+            GtEuusgrs = new HashSet<GtEuusgr>();
         }
 
         public int ApplicationCode { get; set; }
         public int CodeType { get; set; }
         public string CodeDesc { get; set; } = null!;
-        public string? ShortCode { get; set; }
+        public string ShortCode { get; set; } = null!;
         public bool DefaultStatus { get; set; }
         public bool UsageStatus { get; set; }
         public bool ActiveStatus { get; set; }
@@ -27,7 +26,6 @@ namespace eSya.UserCreation.DL.Entities
         public string? ModifiedTerminal { get; set; }
 
         public virtual GtEcapct CodeTypeNavigation { get; set; } = null!;
-        public virtual ICollection<GtEuusgr> GtEuusgrUserGroupNavigations { get; set; }
-        public virtual ICollection<GtEuusgr> GtEuusgrUserTypeNavigations { get; set; }
+        public virtual ICollection<GtEuusgr> GtEuusgrs { get; set; }
     }
 }

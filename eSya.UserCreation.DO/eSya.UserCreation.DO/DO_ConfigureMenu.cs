@@ -58,4 +58,6 @@ namespace eSya.UserCreation.DO
         public string Controller { get; set; }
         public string View { get; set; }
     }
+
+
 }

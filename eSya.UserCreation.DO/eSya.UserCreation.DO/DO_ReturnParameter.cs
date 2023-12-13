@@ -15,4 +15,5 @@ namespace eSya.UserCreation.DO
         public decimal ID { get; set; }
         public string Key { get; set; }
     }
+    
 }

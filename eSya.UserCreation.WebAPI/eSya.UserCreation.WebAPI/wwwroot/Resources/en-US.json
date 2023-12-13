@@ -7,11 +7,16 @@
   "W0112": "User ID is not Exist",
   "W0128": "Mobile Number is already Exist with Different Login ID",
   "W0129": "Email ID is already Exist with Different Login ID",
+  "W00157": "Action Description is already Exist",
+  "W00158": "Action is Not Exist",
+  "W0184": "eSignature is Not Exist",
+
   "S0001": "Saved Sucessfully",
   "S0002": "Updated Sucessfully",
   "S0003": "Activated Successfully",
   "S0004": "De Activated Successfully",
   "S0005": "Deleted Sucessfully",
   "S0006": "User Authenticated Successfully",
-  "S0007": "User Deactivated Successfully"
+  "S0007": "User Deactivated Successfully",
+  "S0008": "Photo Uploaded Sucessfully"
 }
