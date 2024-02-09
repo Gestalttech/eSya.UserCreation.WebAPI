@@ -534,5 +534,18 @@ namespace eSya.UserCreation.WebAPI.Controllers
         #endregion
 
         #endregion
+
+        #region Change Password
+        /// <summary>
+        /// Update  Change Password .
+        /// UI Reffered -Change Password 
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> ChangeUserPassword(DO_ChangePassword obj)
+        {
+            var msg = await _UserCreationRepository.ChangeUserPassword(obj);
+            return Ok(msg);
+        }
+        #endregion
     }
 }

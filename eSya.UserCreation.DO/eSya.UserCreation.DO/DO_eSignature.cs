@@ -22,4 +22,5 @@ namespace eSya.UserCreation.DO
         public int CreatedBy { get; set; }
 
     }
+    
 }

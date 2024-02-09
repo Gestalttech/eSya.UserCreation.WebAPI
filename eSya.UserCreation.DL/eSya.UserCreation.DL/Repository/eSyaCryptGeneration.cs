@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Text.RegularExpressions;
 namespace eSya.UserCreation.DL.Repository
 {
     public class eSyaCryptGeneration
@@ -34,8 +35,6 @@ namespace eSya.UserCreation.DL.Repository
             }
             return encryptString;
         }
-
-
         public static string Decrypt(string cipherText)
         {
             string EncryptionKey = "eSya@12345Tabibi247";
@@ -60,5 +59,7 @@ namespace eSya.UserCreation.DL.Repository
             }
             return cipherText;
         }
+
+        
     }
 }

@@ -834,3 +834,4 @@ D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.WebAPI\e
 D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.WebAPI\eSya.UserCreation.WebAPI\obj\Debug\net6.0\eSya.UserCreation.WebAPI.genruntimeconfig.cache
 D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.WebAPI\eSya.UserCreation.WebAPI\obj\Debug\net6.0\ref\eSya.UserCreation.WebAPI.dll
 D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.WebAPI\eSya.UserCreation.WebAPI\obj\Debug\net6.0\eSya.UserCreation.WebAPI.MvcApplicationPartsAssemblyInfo.cs
+D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.WebAPI\eSya.UserCreation.WebAPI\obj\Debug\net6.0\eSya.UserCreation.WebAPI.sourcelink.json

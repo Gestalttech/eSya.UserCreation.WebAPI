@@ -113,5 +113,8 @@ namespace eSya.UserCreation.IF
 
         #endregion
 
+        #region Change Password
+        Task<DO_ReturnParameter> ChangeUserPassword(DO_ChangePassword obj);
+        #endregion
     }
 }

@@ -43,3 +43,4 @@ D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.IF\eSya.
 D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.IF\eSya.UserCreation.IF\obj\Debug\net6.0\refint\eSya.UserCreation.IF.dll
 D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.IF\eSya.UserCreation.IF\obj\Debug\net6.0\eSya.UserCreation.IF.pdb
 D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.IF\eSya.UserCreation.IF\obj\Debug\net6.0\ref\eSya.UserCreation.IF.dll
+D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.IF\eSya.UserCreation.IF\obj\Debug\net6.0\eSya.UserCreation.IF.sourcelink.json

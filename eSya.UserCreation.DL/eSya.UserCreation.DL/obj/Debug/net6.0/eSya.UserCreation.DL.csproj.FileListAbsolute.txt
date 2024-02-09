@@ -55,3 +55,4 @@ D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.DL\eSya.
 D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.DL\eSya.UserCreation.DL\obj\Debug\net6.0\eSya.UserCreation.DL.pdb
 D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.DL\eSya.UserCreation.DL\obj\Debug\net6.0\eSya.UserCreation.DL.genruntimeconfig.cache
 D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.DL\eSya.UserCreation.DL\obj\Debug\net6.0\ref\eSya.UserCreation.DL.dll
+D:\Projects\eSyaProjects2022\eSya.UserCreation.WebAPI\eSya.UserCreation.DL\eSya.UserCreation.DL\obj\Debug\net6.0\eSya.UserCreation.DL.sourcelink.json

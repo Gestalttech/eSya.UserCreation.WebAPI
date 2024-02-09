@@ -10,6 +10,9 @@
   "W00157": "Action Description is already Exist",
   "W00158": "Action is Not Exist",
   "W0184": "eSignature is Not Exist",
+  "W0206": "Invalid Old Password",
+  "W0207": "Not Exist",
+  "W0208": "User Not Exist",
 
   "S0001": "Saved Sucessfully",
   "S0002": "Updated Sucessfully",
@@ -18,5 +21,7 @@
   "S0005": "Deleted Sucessfully",
   "S0006": "User Authenticated Successfully",
   "S0007": "User Deactivated Successfully",
-  "S0008": "Photo Uploaded Sucessfully"
+  "S0008": "Photo Uploaded Sucessfully",
+  "S0009": "Un Blocked Sucessfully",
+  "S0010": "Password has been Changed Sucessfully"
 }

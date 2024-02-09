@@ -119,6 +119,21 @@ namespace eSya.UserCreation.DO
         public string? userimage { get; set; }
     }
 
+    public class DO_UserPassword
+    {
+        public int UserID { get; set; }
+        public string? LoginDesc { get; set; }
+        public byte[] EPasswd { get; set; }
+    }
+    public class DO_ChangePassword
+    {
+        public int userID { get; set; }
+        public string oldpassword { get; set; }
+        public string newPassword { get; set; }
+        public string FormID { get; set; }
+        public int CreatedBy { get; set; }
+        public string TerminalID { get; set; }
+    }
     //not used right now
     public class DO_UserBusinessLink
     {

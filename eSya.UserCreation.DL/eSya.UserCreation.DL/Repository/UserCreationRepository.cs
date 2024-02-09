@@ -4,7 +4,9 @@ using eSya.UserCreation.IF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -1814,7 +1816,7 @@ namespace eSya.UserCreation.DL.Repository
                         }
 
                         await db.SaveChangesAsync();
-
+                       
                         dbContext.Commit();
                         return new DO_ReturnParameter() { Status = true, StatusCode = "S0002", Message = string.Format(_localizer[name: "S0002"]), ID = obj.UserID };
                     }
@@ -2304,7 +2306,155 @@ namespace eSya.UserCreation.DL.Repository
 
         #endregion
 
+        #region Change Password
+        public async Task<DO_ReturnParameter> ChangeUserPassword(DO_ChangePassword obj)
+        {
+            using (eSyaEnterprise db = new eSyaEnterprise())
+            {
+                using (var dbContext = db.Database.BeginTransaction())
+                {
+                    try { 
+                        var user = await db.GtEuusms
+                            .Join(db.GtEuuspws,
+                                u => new { u.UserId },
+                                up => new { up.UserId },
+                                (u, up) => new { u, up }).Where(x => x.u.UserId == obj.userID && x.u.ActiveStatus && x.up.UserId == obj.userID)
+                                .Select(m => new DO_UserPassword
+                                {
+                                    UserID = m.u.UserId,
+                                    EPasswd = m.up.EPasswd
+                                }).FirstOrDefaultAsync();
 
+
+                        if (user != null)
+                        {
+                            string existingpassword = string.Empty;
+                            string olduserpassword = string.Empty;
+                            if (user.EPasswd.Length != 0)
+                            {
+                                existingpassword = eSyaCryptGeneration.Decrypt(Encoding.UTF8.GetString(user.EPasswd));
+
+                                //existingpassword = eSyaCryptGeneration.Decrypt(Convert.ToBase64String(user.EPasswd));
+
+                               
+                                Byte[] oldpasswordbitmapData = Encoding.UTF8.GetBytes(eSyaCryptGeneration.Encrypt(obj.oldpassword));
+                                olduserpassword = eSyaCryptGeneration.Decrypt(Encoding.UTF8.GetString(oldpasswordbitmapData));
+
+                                if (existingpassword != olduserpassword)
+                                {
+                                    return new DO_ReturnParameter() { Status = false, StatusCode = "W0206", Message = string.Format(_localizer[name: "W0206"]) };
+                                }
+                               
+                                else
+                                {
+                                    var usermaster = db.GtEuusms.Where(x => x.UserId == obj.userID).FirstOrDefault();
+                                    var passwordmaster = db.GtEuuspws.Where(x => x.UserId == obj.userID).FirstOrDefault();
+                                    if (usermaster != null && passwordmaster != null)
+                                    {
+                                        usermaster.LastPasswordUpdatedDate = DateTime.Now;
+                                        await db.SaveChangesAsync();
+                                    }
+
+
+                                   
+                                    passwordmaster.EPasswd = Encoding.UTF8.GetBytes(eSyaCryptGeneration.Encrypt(obj.newPassword));
+                                    passwordmaster.LastPasswdDate = DateTime.Now;
+                                    await db.SaveChangesAsync();
+                                    var serialno = db.GtEuusphs.Select(x => x.SerialNumber).DefaultIfEmpty().Max() + 1;
+                                    var passhistory = new GtEuusph
+                                    {
+                                        UserId = obj.userID,
+                                        SerialNumber = serialno,
+                                        EPasswd = Encoding.UTF8.GetBytes(eSyaCryptGeneration.Encrypt(obj.newPassword)),
+                                        LastPasswdChangedDate = DateTime.Now,
+                                        ActiveStatus = true,
+                                        FormId = obj.FormID,
+                                        CreatedBy = obj.CreatedBy,
+                                        CreatedOn = DateTime.Now,
+                                        CreatedTerminal = obj.TerminalID
+                                    };
+                                    db.GtEuusphs.Add(passhistory);
+                                    await db.SaveChangesAsync();
+                                    dbContext.Commit();
+                                    return new DO_ReturnParameter() { Status = true, StatusCode = "S0010", Message = string.Format(_localizer[name: "S0010"]) };
+
+                                }
+                            }
+                            else
+                            {
+                                return new DO_ReturnParameter() { Status = false, StatusCode = "W0207", Message = string.Format(_localizer[name: "W0207"]) };
+
+                            }
+
+
+
+                        }
+                        else
+                        {
+                            return new DO_ReturnParameter() { Status = false, StatusCode = "W0208", Message = string.Format(_localizer[name: "W0208"]) };
+
+
+                        }
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        dbContext.Rollback();
+                        throw new Exception(CommonMethod.GetValidationMessageFromException(ex));
+                    }
+                    catch (Exception ex)
+                    {
+                        dbContext.Rollback();
+                        return new DO_ReturnParameter() { Status = false, Message = ex.Message };
+                    }
+                }
+
+            }
+        }
+        #endregion
+
+        public void InsertPassword()
+        {
+            string pass = "Abdul@123";
+          
+
+            using (eSyaEnterprise db = new eSyaEnterprise())
+            {
+                using (var dbContext = db.Database.BeginTransaction())
+                {
+                    
+                         var p = new GtEuuspw
+                         {
+                             UserId = 1,
+                             EPasswd = Encoding.UTF8.GetBytes(eSyaCryptGeneration.Encrypt(pass)),
+                             LastPasswdDate = DateTime.Now,
+                             ActiveStatus = true,
+                             FormId = "0",
+                             CreatedBy = 3,
+                             CreatedOn = DateTime.Now,
+                             CreatedTerminal = "0"
+                         };
+                    db.GtEuuspws.Add(p);
+                    db.SaveChanges();
+
+                    var serialno = db.GtEuusphs.Select(x => x.SerialNumber).DefaultIfEmpty().Max() + 1;
+                    var passhistory = new GtEuusph
+                    {
+                        UserId = 1,
+                        SerialNumber = serialno,
+                        EPasswd = Encoding.UTF8.GetBytes(eSyaCryptGeneration.Encrypt(pass)),
+                        LastPasswdChangedDate = DateTime.Now,
+                        ActiveStatus = true,
+                        FormId = "0",
+                        CreatedBy = 3,
+                        CreatedOn = DateTime.Now,
+                        CreatedTerminal = "0"
+                    };
+                    db.GtEuusphs.Add(passhistory);
+                    db.SaveChanges();
+                    dbContext.Commit();
+                }
+            }
+        }
     }
 }
 
