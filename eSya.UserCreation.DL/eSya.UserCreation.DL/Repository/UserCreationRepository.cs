@@ -2349,6 +2349,23 @@ namespace eSya.UserCreation.DL.Repository
                                 {
                                     var usermaster = db.GtEuusms.Where(x => x.UserId == obj.userID).FirstOrDefault();
                                     var passwordmaster = db.GtEuuspws.Where(x => x.UserId == obj.userID).FirstOrDefault();
+
+                                    var pass_history = db.GtEuusphs.Where(x => x.UserId == obj.userID).Select
+                                        (x => new DO_ChangePassword
+                                        {
+                                            newPassword = eSyaCryptGeneration.Decrypt(Encoding.UTF8.GetString(x.EPasswd))
+                                        }).ToList();
+                                    if (pass_history != null)
+                                    {
+                                        foreach (var p in pass_history)
+                                        {
+                                            if (p.newPassword == obj.newPassword)
+                                            {
+                                                return new DO_ReturnParameter() { Status = false, StatusCode = "W0209", Message = string.Format(_localizer[name: "W0209"]) };
+                                            }
+                                        }
+                                    }
+
                                     if (usermaster != null && passwordmaster != null)
                                     {
                                         usermaster.LastPasswordUpdatedDate = DateTime.Now;
@@ -2412,49 +2429,49 @@ namespace eSya.UserCreation.DL.Repository
         }
         #endregion
 
-        public void InsertPassword()
-        {
-            string pass = "Abdul@123";
+        //public void InsertPassword()
+        //{
+        //    string pass = "Abdul@123";
           
 
-            using (eSyaEnterprise db = new eSyaEnterprise())
-            {
-                using (var dbContext = db.Database.BeginTransaction())
-                {
+        //    using (eSyaEnterprise db = new eSyaEnterprise())
+        //    {
+        //        using (var dbContext = db.Database.BeginTransaction())
+        //        {
                     
-                         var p = new GtEuuspw
-                         {
-                             UserId = 1,
-                             EPasswd = Encoding.UTF8.GetBytes(eSyaCryptGeneration.Encrypt(pass)),
-                             LastPasswdDate = DateTime.Now,
-                             ActiveStatus = true,
-                             FormId = "0",
-                             CreatedBy = 3,
-                             CreatedOn = DateTime.Now,
-                             CreatedTerminal = "0"
-                         };
-                    db.GtEuuspws.Add(p);
-                    db.SaveChanges();
+        //                 var p = new GtEuuspw
+        //                 {
+        //                     UserId = 1,
+        //                     EPasswd = Encoding.UTF8.GetBytes(eSyaCryptGeneration.Encrypt(pass)),
+        //                     LastPasswdDate = DateTime.Now,
+        //                     ActiveStatus = true,
+        //                     FormId = "0",
+        //                     CreatedBy = 3,
+        //                     CreatedOn = DateTime.Now,
+        //                     CreatedTerminal = "0"
+        //                 };
+        //            db.GtEuuspws.Add(p);
+        //            db.SaveChanges();
 
-                    var serialno = db.GtEuusphs.Select(x => x.SerialNumber).DefaultIfEmpty().Max() + 1;
-                    var passhistory = new GtEuusph
-                    {
-                        UserId = 1,
-                        SerialNumber = serialno,
-                        EPasswd = Encoding.UTF8.GetBytes(eSyaCryptGeneration.Encrypt(pass)),
-                        LastPasswdChangedDate = DateTime.Now,
-                        ActiveStatus = true,
-                        FormId = "0",
-                        CreatedBy = 3,
-                        CreatedOn = DateTime.Now,
-                        CreatedTerminal = "0"
-                    };
-                    db.GtEuusphs.Add(passhistory);
-                    db.SaveChanges();
-                    dbContext.Commit();
-                }
-            }
-        }
+        //            var serialno = db.GtEuusphs.Select(x => x.SerialNumber).DefaultIfEmpty().Max() + 1;
+        //            var passhistory = new GtEuusph
+        //            {
+        //                UserId = 1,
+        //                SerialNumber = serialno,
+        //                EPasswd = Encoding.UTF8.GetBytes(eSyaCryptGeneration.Encrypt(pass)),
+        //                LastPasswdChangedDate = DateTime.Now,
+        //                ActiveStatus = true,
+        //                FormId = "0",
+        //                CreatedBy = 3,
+        //                CreatedOn = DateTime.Now,
+        //                CreatedTerminal = "0"
+        //            };
+        //            db.GtEuusphs.Add(passhistory);
+        //            db.SaveChanges();
+        //            dbContext.Commit();
+        //        }
+        //    }
+        //}
     }
 }
 

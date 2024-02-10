@@ -13,6 +13,7 @@
   "W0206": "Invalid Old Password",
   "W0207": "Not Exist",
   "W0208": "User Not Exist",
+  "W0209": "This Password is already Used in Past",
 
   "S0001": "Saved Sucessfully",
   "S0002": "Updated Sucessfully",
