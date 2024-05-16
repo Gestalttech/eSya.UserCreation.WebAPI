@@ -26,7 +26,7 @@ namespace eSya.UserCreation.DL.Repository
             {
                 using (var db = new eSyaEnterprise())
                 {
-                    var ds = db.GtEuusms.Where(x => x.IsUserDeactivated == true && x.ActiveStatus == true)
+                    var ds = db.GtEuusms.Where(x => x.IsUserDeactivated == false && x.ActiveStatus == true)
                         .Select(r => new DO_UserMaster
                         {
                             UserID = r.UserId,
@@ -65,6 +65,7 @@ namespace eSya.UserCreation.DL.Repository
                             return new DO_ReturnParameter() { Status = false, StatusCode = "W0112", Message = string.Format(_localizer[name: "W0112"]) };
                         }
                         b_user.IsUserDeactivated = obj.IsUserDeactivated;
+                        b_user.ActiveStatus = false;
                         b_user.DeactivationReason = obj.DeactivationReason;
                         b_user.UserDeactivatedOn = System.DateTime.Now;
                         b_user.ModifiedBy = obj.ModifiedBy;
