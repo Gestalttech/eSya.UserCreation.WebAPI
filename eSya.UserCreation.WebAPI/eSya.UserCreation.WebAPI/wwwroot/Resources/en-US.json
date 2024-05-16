@@ -24,5 +24,7 @@
   "S0007": "User Deactivated Successfully",
   "S0008": "Photo Uploaded Sucessfully",
   "S0009": "Un Blocked Sucessfully",
-  "S0010": "Password has been Changed Sucessfully"
+  "S0010": "Password has been Changed Sucessfully",
+  "S0011": "User is Authenticated Sucessfully",
+  "S0012": "User is De Activated Sucessfully"
 }

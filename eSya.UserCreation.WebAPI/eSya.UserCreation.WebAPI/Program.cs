@@ -48,6 +48,8 @@ builder.Services.AddScoped<ICommonDataRepository, CommonDataRepository>();
 builder.Services.AddScoped<IUserCreationRepository, UserCreationRepository>();
 builder.Services.AddScoped<IeSignatureRepository, eSignatureRepository>();
 builder.Services.AddScoped<IBlockRepository, BlockRepository>();
+builder.Services.AddScoped<IAuthorizeRepository, AuthorizeRepository>();
+builder.Services.AddScoped<IDeActivateRepository, DeActivateRepository>();
 builder.Services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
 
 
