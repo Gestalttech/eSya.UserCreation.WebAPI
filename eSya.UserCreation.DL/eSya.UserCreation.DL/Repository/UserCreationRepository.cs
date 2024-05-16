@@ -2429,49 +2429,7 @@ namespace eSya.UserCreation.DL.Repository
         }
         #endregion
 
-        //public void InsertPassword()
-        //{
-        //    string pass = "Abdul@123";
-          
-
-        //    using (eSyaEnterprise db = new eSyaEnterprise())
-        //    {
-        //        using (var dbContext = db.Database.BeginTransaction())
-        //        {
-                    
-        //                 var p = new GtEuuspw
-        //                 {
-        //                     UserId = 1,
-        //                     EPasswd = Encoding.UTF8.GetBytes(eSyaCryptGeneration.Encrypt(pass)),
-        //                     LastPasswdDate = DateTime.Now,
-        //                     ActiveStatus = true,
-        //                     FormId = "0",
-        //                     CreatedBy = 3,
-        //                     CreatedOn = DateTime.Now,
-        //                     CreatedTerminal = "0"
-        //                 };
-        //            db.GtEuuspws.Add(p);
-        //            db.SaveChanges();
-
-        //            var serialno = db.GtEuusphs.Select(x => x.SerialNumber).DefaultIfEmpty().Max() + 1;
-        //            var passhistory = new GtEuusph
-        //            {
-        //                UserId = 1,
-        //                SerialNumber = serialno,
-        //                EPasswd = Encoding.UTF8.GetBytes(eSyaCryptGeneration.Encrypt(pass)),
-        //                LastPasswdChangedDate = DateTime.Now,
-        //                ActiveStatus = true,
-        //                FormId = "0",
-        //                CreatedBy = 3,
-        //                CreatedOn = DateTime.Now,
-        //                CreatedTerminal = "0"
-        //            };
-        //            db.GtEuusphs.Add(passhistory);
-        //            db.SaveChanges();
-        //            dbContext.Commit();
-        //        }
-        //    }
-        //}
+        
     }
 }
 

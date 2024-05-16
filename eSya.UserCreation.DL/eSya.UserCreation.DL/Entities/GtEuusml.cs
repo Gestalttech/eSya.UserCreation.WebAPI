@@ -5,11 +5,6 @@ namespace eSya.UserCreation.DL.Entities
 {
     public partial class GtEuusml
     {
-        public GtEuusml()
-        {
-            GtEuusfas = new HashSet<GtEuusfa>();
-        }
-
         public int UserId { get; set; }
         public int BusinessKey { get; set; }
         public int MenuKey { get; set; }
@@ -23,6 +18,5 @@ namespace eSya.UserCreation.DL.Entities
         public string? ModifiedTerminal { get; set; }
 
         public virtual GtEuusbl GtEuusbl { get; set; } = null!;
-        public virtual ICollection<GtEuusfa> GtEuusfas { get; set; }
     }
 }

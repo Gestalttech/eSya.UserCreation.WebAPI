@@ -5,11 +5,6 @@ namespace eSya.UserCreation.DL.Entities
 {
     public partial class GtEcbsln
     {
-        public GtEcbsln()
-        {
-            GtEuusfas = new HashSet<GtEuusfa>();
-        }
-
         public int BusinessId { get; set; }
         public int LocationId { get; set; }
         public int BusinessKey { get; set; }
@@ -22,6 +17,7 @@ namespace eSya.UserCreation.DL.Entities
         public bool? TolocalCurrency { get; set; }
         public bool TocurrConversion { get; set; }
         public bool TorealCurrency { get; set; }
+        public bool Lstatus { get; set; }
         public bool ActiveStatus { get; set; }
         public string FormId { get; set; } = null!;
         public int CreatedBy { get; set; }
@@ -30,7 +26,5 @@ namespace eSya.UserCreation.DL.Entities
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public string? ModifiedTerminal { get; set; }
-
-        public virtual ICollection<GtEuusfa> GtEuusfas { get; set; }
     }
 }

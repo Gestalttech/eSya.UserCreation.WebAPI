@@ -25,7 +25,6 @@ namespace eSya.UserCreation.DL.Entities
         public DateTime? ModifiedOn { get; set; }
         public string? ModifiedTerminal { get; set; }
 
-        public virtual GtEcapct CodeTypeNavigation { get; set; } = null!;
         public virtual ICollection<GtEuusgr> GtEuusgrs { get; set; }
     }
 }
