@@ -2313,7 +2313,8 @@ namespace eSya.UserCreation.DL.Repository
             {
                 using (var dbContext = db.Database.BeginTransaction())
                 {
-                    try { 
+                    try {
+                        
                         var user = await db.GtEuusms
                             .Join(db.GtEuuspws,
                                 u => new { u.UserId },

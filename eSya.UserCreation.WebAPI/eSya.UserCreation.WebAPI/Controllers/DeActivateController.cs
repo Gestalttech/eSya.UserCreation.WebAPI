@@ -14,6 +14,7 @@ namespace eSya.UserCreation.WebAPI.Controllers
         {
             _deActivateRepository = deActivateRepository;
         }
+        #region Authenticate User
         /// <summary>
         /// Get All Activated Users List.
         /// UI Reffered - User De-Activation
@@ -35,5 +36,6 @@ namespace eSya.UserCreation.WebAPI.Controllers
             var msg = await _deActivateRepository.DeActivateUser(obj);
             return Ok(msg);
         }
+        #endregion
     }
 }

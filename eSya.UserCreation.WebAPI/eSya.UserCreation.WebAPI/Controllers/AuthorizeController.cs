@@ -9,11 +9,14 @@ namespace eSya.UserCreation.WebAPI.Controllers
     [ApiController]
     public class AuthorizeController : ControllerBase
     {
+       
         private readonly IAuthorizeRepository _authorizeRepository;
         public AuthorizeController(IAuthorizeRepository authorizeRepository)
         {
             _authorizeRepository = authorizeRepository;
         }
+
+        #region Authenticate User
         /// <summary>
         /// Get All Un Authenticated Users List.
         /// UI Reffered - User Authenticated
@@ -35,5 +38,6 @@ namespace eSya.UserCreation.WebAPI.Controllers
             var msg = await _authorizeRepository.AuthenticateUser(obj);
             return Ok(msg);
         }
+        #endregion
     }
 }
