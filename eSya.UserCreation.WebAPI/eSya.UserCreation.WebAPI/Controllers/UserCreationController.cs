@@ -279,11 +279,23 @@ namespace eSya.UserCreation.WebAPI.Controllers
         //}
         //#endregion User Creation
 
-        
+
 
         #region User Creation New Process
 
         #region User Group
+
+        /// <summary>
+        /// Get User Group.
+        /// UI Reffered - Fill User Roles
+        /// </summary>
+        /// <returns></returns>     
+        [HttpGet]
+        public async Task<IActionResult> GetActiveUserRolesByCodeType(int codeType)
+        {
+            var userroles = await _UserCreationRepository.GetActiveUserRolesByCodeType(codeType);
+            return Ok(userroles);
+        }
         /// <summary>
         /// Get User Group.
         /// UI Reffered - Fill User Group Tree view

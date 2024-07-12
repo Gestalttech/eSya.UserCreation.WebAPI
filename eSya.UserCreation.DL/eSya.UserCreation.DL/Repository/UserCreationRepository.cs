@@ -1,6 +1,7 @@
 ﻿using eSya.UserCreation.DL.Entities;
 using eSya.UserCreation.DO;
 using eSya.UserCreation.IF;
+using Microsoft.Data.SqlClient.Server;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
@@ -1317,6 +1318,34 @@ namespace eSya.UserCreation.DL.Repository
         #region User Creation New Process
 
         #region User Group
+        public async Task<List<DO_ApplicationCodes>> GetActiveUserRolesByCodeType(int codeType)
+        {
+            try
+            {
+                using (var db = new eSyaEnterprise())
+                {
+                    var ds=db.GtEuusrls.Join
+                        (db.GtEcapcds,
+                        x => new {x.UserRole},
+                        y=>  new { UserRole=y.ApplicationCode},
+                        (x,y)=> new {x,y}).Where
+                        (w=>w.x.ActiveStatus && w.y.ActiveStatus && w.y.CodeType==codeType)
+                   .Select(r => new DO_ApplicationCodes
+                   {
+                       ApplicationCode = r.x.UserRole,
+                       CodeDesc = r.y.CodeDesc
+                   }).OrderBy(x=>x.CodeDesc).ToList();
+                    var Distroles = ds.GroupBy(x => new { x.ApplicationCode }).Select(g => g.First()).ToList();
+
+                    return Distroles.ToList();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public async Task<DO_ConfigureMenu> GetUserRoleMenulist(int UserGroup,  short UserRole, int BusinessKey)
         {
             try
@@ -1735,7 +1764,9 @@ namespace eSya.UserCreation.DL.Repository
 
                         }
                         await db.SaveChangesAsync();
+                        //CreateOTPforUserLogin(_userId);
                         dbContext.Commit();
+                      
                         return new DO_ReturnParameter() { Status = true, StatusCode = "S0001", Message = string.Format(_localizer[name: "S0001"]), ID = _userId };
                     }
                     catch (DbUpdateException ex)
@@ -1814,10 +1845,10 @@ namespace eSya.UserCreation.DL.Repository
                             }
 
                         }
-
                         await db.SaveChangesAsync();
-                       
+                        //CreateOTPforUserLogin(obj.UserID);
                         dbContext.Commit();
+                       
                         return new DO_ReturnParameter() { Status = true, StatusCode = "S0002", Message = string.Format(_localizer[name: "S0002"]), ID = obj.UserID };
                     }
                     catch (DbUpdateException ex)
@@ -2430,7 +2461,135 @@ namespace eSya.UserCreation.DL.Repository
         }
         #endregion
 
-        
+        #region Create Password & OTP
+
+        public void CreateOTPforUserLogin(int userId)
+        {
+            using (var db = new eSyaEnterprise())
+            {
+                using (var dbContext = db.Database.BeginTransaction())
+                {
+
+                    try
+                    {
+                        var userOtp = db.GtEuuotps.Where(x => x.UserId == userId).FirstOrDefault();
+                        Random rnd = new Random();
+                        var OTP = rnd.Next(100000, 999999).ToString();
+
+                        if (userOtp == null)
+                        {
+                            var lotp = new GtEuuotp()
+                            {
+                                UserId = userId,
+                                Otpnumber = OTP,
+                                OtpgeneratedDate = System.DateTime.Now,
+                                UsageStatus = false,
+                                ActiveStatus = true,
+                                FormId = "0",
+                                CreatedBy = userId,
+                                CreatedOn = System.DateTime.Now,
+                                CreatedTerminal = "GTPL"
+                            };
+                            db.GtEuuotps.Add(lotp);
+                            db.SaveChanges();
+
+                        }
+                        else
+                        {
+                            userOtp.Otpnumber = OTP;
+                            userOtp.UsageStatus = false;
+                            userOtp.ActiveStatus = true;
+                            userOtp.OtpgeneratedDate = System.DateTime.Now;
+                            userOtp.ModifiedBy = userId;
+                            userOtp.ModifiedOn = System.DateTime.Now;
+                            userOtp.ModifiedTerminal = "GTPL";
+                        }
+                        db.SaveChanges();
+                        dbContext.Commit();
+                    }
+
+                    catch (DbUpdateException ex)
+                    {
+                        dbContext.Rollback();
+                        throw ex;
+                    }
+
+                }
+            }
+        }
+        public void CreateUserPassword(int _userId )
+        {
+            using (eSyaEnterprise db = new eSyaEnterprise())
+            {
+                using (var dbContext = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        byte[] Epass = Encoding.UTF8.GetBytes(eSyaCryptGeneration.Encrypt("Gtpl@123"));
+                        string password = string.Empty;
+                        password = eSyaCryptGeneration.Decrypt(Encoding.UTF8.GetString(Epass));
+
+
+                        //olduserpassword = eSyaCryptGeneration.Decrypt(Encoding.UTF8.GetString(oldpasswordbitmapData));
+
+                        var passExist = db.GtEuuspws.Where(x => x.UserId == _userId).FirstOrDefault();
+                        if (passExist != null)
+                        {
+                            passExist.EPasswd = Epass;
+                            passExist.LastPasswdDate = DateTime.Now;
+                            passExist.ModifiedBy = 0;
+                            passExist.ModifiedOn = DateTime.Now;
+                            passExist.ModifiedTerminal = "GTPL";
+                        }
+                        db.SaveChanges();
+                        var _pas = new GtEuuspw()
+                            {
+                                UserId= _userId,
+                                EPasswd = Epass,
+                                LastPasswdDate = DateTime.Now,
+                                ActiveStatus = true,
+                                FormId ="0",
+                                CreatedBy = _userId,
+                                CreatedOn = DateTime.Now,
+                                CreatedTerminal = "GTPL"
+
+                            };
+                        db.GtEuuspws.Add(_pas);
+                        db.SaveChanges();
+                        var serialno = db.GtEuusphs.Select(x => x.SerialNumber).DefaultIfEmpty().Max() + 1;
+                        var passhistory = new GtEuusph
+                        {
+                            UserId = _userId,
+                            SerialNumber = serialno,
+                            EPasswd = Encoding.UTF8.GetBytes(eSyaCryptGeneration.Encrypt(password)),
+                            LastPasswdChangedDate = DateTime.Now,
+                            ActiveStatus = true,
+                            FormId = "0",
+                            CreatedBy = _userId,
+                            CreatedOn = DateTime.Now,
+                            CreatedTerminal = "GTPL"
+                        };
+                        db.GtEuusphs.Add(passhistory);
+                        db.SaveChanges();
+                        dbContext.Commit();
+
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        dbContext.Rollback();
+                        throw new Exception(CommonMethod.GetValidationMessageFromException(ex));
+                    }
+                    catch (Exception ex)
+                    {
+                        dbContext.Rollback();
+                    }
+                }
+
+            }
+        }
+        #endregion
+
+
     }
 }
 

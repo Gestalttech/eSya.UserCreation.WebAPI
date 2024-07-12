@@ -30,6 +30,7 @@ namespace eSya.UserCreation.DL.Entities
         public virtual DbSet<GtEcsbmn> GtEcsbmns { get; set; } = null!;
         public virtual DbSet<GtEsdocd> GtEsdocds { get; set; } = null!;
         public virtual DbSet<GtEuubgr> GtEuubgrs { get; set; } = null!;
+        public virtual DbSet<GtEuuotp> GtEuuotps { get; set; } = null!;
         public virtual DbSet<GtEuusbl> GtEuusbls { get; set; } = null!;
         public virtual DbSet<GtEuuse> GtEuuses { get; set; } = null!;
         public virtual DbSet<GtEuusgr> GtEuusgrs { get; set; } = null!;
@@ -390,11 +391,6 @@ namespace eSya.UserCreation.DL.Entities
                     .IsUnicode(false)
                     .HasColumnName("FormID");
 
-                entity.Property(e => e.Gender)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength();
-
                 entity.Property(e => e.Isdcode).HasColumnName("ISDCode");
 
                 entity.Property(e => e.MobileNumber)
@@ -407,11 +403,7 @@ namespace eSya.UserCreation.DL.Entities
 
                 entity.Property(e => e.Password).HasMaxLength(20);
 
-                entity.Property(e => e.TraiffFrom)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('N')")
-                    .IsFixedLength();
+                entity.Property(e => e.TraiffFrom).HasDefaultValueSql("('N')");
             });
 
             modelBuilder.Entity<GtEuubgr>(entity =>
@@ -438,6 +430,38 @@ namespace eSya.UserCreation.DL.Entities
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<GtEuuotp>(entity =>
+            {
+                entity.HasKey(e => e.UserId);
+
+                entity.ToTable("GT_EUUOTP");
+
+                entity.Property(e => e.UserId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("UserID");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.FormId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("FormID");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.OtpgeneratedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("OTPGeneratedDate");
+
+                entity.Property(e => e.Otpnumber)
+                    .HasMaxLength(20)
+                    .HasColumnName("OTPNumber");
             });
 
             modelBuilder.Entity<GtEuusbl>(entity =>
