@@ -1346,6 +1346,36 @@ namespace eSya.UserCreation.DL.Repository
                 throw ex;
             }
         }
+        public async Task<List<DO_UserRoleActionLink>> GetActionsByUserGroup(int userRole)
+        {
+            try
+            {
+                using (var db = new eSyaEnterprise())
+                {
+                    var ds = db.GtEuusrls.Join
+                        (db.GtEcfmacs,
+                        x => new { x.ActionId },
+                        y => new { y.ActionId },
+                        (x, y) => new { x, y })
+                        .Where(w => w.x.ActiveStatus && w.y.ActiveStatus && w.x.UserRole == userRole)
+                   .Select(r => new DO_UserRoleActionLink
+                   {
+                       ActionId = r.x.ActionId,
+                       UserRole=r.x.UserRole,
+                       ActionDesc = r.y.ActionDesc,
+                       ActiveStatus=r.x.ActiveStatus
+                   }).ToList();
+                    var Distactions = ds.GroupBy(x => new { x.ActionId,x.UserRole }).Select(g => g.First()).ToList();
+
+                    return Distactions.ToList();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public async Task<DO_ConfigureMenu> GetUserRoleMenulist(int UserGroup,  short UserRole, int BusinessKey)
         {
             try

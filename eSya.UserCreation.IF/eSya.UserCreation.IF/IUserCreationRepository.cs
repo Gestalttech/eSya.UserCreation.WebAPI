@@ -70,6 +70,7 @@ namespace eSya.UserCreation.IF
 
         #region User Group
         Task<List<DO_ApplicationCodes>> GetActiveUserRolesByCodeType(int codeType);
+        Task<List<DO_UserRoleActionLink>> GetActionsByUserGroup(int userRole);
         Task<DO_ConfigureMenu> GetUserRoleMenulist(int UserGroup, short UserRole, int BusinessKey);
         Task<DO_ReturnParameter> InsertOrUpdateUserRoleMenuLink(List<DO_UserGroupRole> obj);
         #endregion

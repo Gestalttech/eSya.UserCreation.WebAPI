@@ -298,6 +298,17 @@ namespace eSya.UserCreation.WebAPI.Controllers
         }
         /// <summary>
         /// Get User Group.
+        /// UI Reffered - Fill User Actions
+        /// </summary>
+        /// <returns></returns>     
+        [HttpGet]
+        public async Task<IActionResult> GetActionsByUserGroup(int userRole)
+        {
+            var useractions = await _UserCreationRepository.GetActionsByUserGroup(userRole);
+            return Ok(useractions);
+        }
+        /// <summary>
+        /// Get User Group.
         /// UI Reffered - Fill User Group Tree view
         /// </summary>
         /// <returns></returns>

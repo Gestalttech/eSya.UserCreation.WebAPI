@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("eSya.UserCreation.IF")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+02123bbc33f2cb4c29e253f61dd54433937cbe17")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2e68c7cb2ac7193433514c816dbebd2b26870ca8")]
 [assembly: System.Reflection.AssemblyProductAttribute("eSya.UserCreation.IF")]
 [assembly: System.Reflection.AssemblyTitleAttribute("eSya.UserCreation.IF")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
