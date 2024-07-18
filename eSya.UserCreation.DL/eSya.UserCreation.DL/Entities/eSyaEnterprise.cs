@@ -574,6 +574,8 @@ namespace eSya.UserCreation.DL.Entities
                     .HasMaxLength(50)
                     .HasColumnName("eMailID");
 
+                entity.Property(e => e.FirstUseByUser).HasColumnType("datetime");
+
                 entity.Property(e => e.FormId)
                     .HasMaxLength(10)
                     .IsUnicode(false)
@@ -601,6 +603,8 @@ namespace eSya.UserCreation.DL.Entities
                     .HasColumnName("PhotoURL");
 
                 entity.Property(e => e.UserAuthenticatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.UserCreatedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.UserDeactivatedOn).HasColumnType("datetime");
             });

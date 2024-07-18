@@ -1756,6 +1756,8 @@ namespace eSya.UserCreation.DL.Repository
                             Photo = obj.Photo,
                             PhotoUrl = null,
                             EMailId = obj.EMailId,
+                            UserCreatedOn=System.DateTime.Now,
+                            FirstUseByUser=null,
                             CreatePasswordInNextSignIn = true,
                             UnsuccessfulAttempt=0,
                             LoginAttemptDate=null,
@@ -2491,7 +2493,7 @@ namespace eSya.UserCreation.DL.Repository
         }
         #endregion
 
-        #region Create Password & OTP
+        #region Create Password & OTP need to remove GtEuuspw & GtEuuspw tables
 
         public void CreateOTPforUserLogin(int userId)
         {
