@@ -1796,7 +1796,7 @@ namespace eSya.UserCreation.DL.Repository
 
                         }
                         await db.SaveChangesAsync();
-                        //CreateOTPforUserLogin(_userId);
+                        CreateOTPforUserLogin(_userId);
                         dbContext.Commit();
                       
                         return new DO_ReturnParameter() { Status = true, StatusCode = "S0001", Message = string.Format(_localizer[name: "S0001"]), ID = _userId };
@@ -2493,7 +2493,7 @@ namespace eSya.UserCreation.DL.Repository
         }
         #endregion
 
-        #region Create Password & OTP need to remove GtEuuspw & GtEuuspw tables
+        #region Create Password & OTP need to remove GtEuuspw & GtEuuspw tables otp only required
 
         public void CreateOTPforUserLogin(int userId)
         {
