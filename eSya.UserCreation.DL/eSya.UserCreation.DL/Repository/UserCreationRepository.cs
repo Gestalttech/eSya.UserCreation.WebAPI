@@ -2493,7 +2493,7 @@ namespace eSya.UserCreation.DL.Repository
         }
         #endregion
 
-        #region Create Password & OTP need to remove GtEuuspw & GtEuuspw tables otp only required
+        #region Send OTP 
 
         public void CreateOTPforUserLogin(int userId)
         {
@@ -2549,7 +2549,11 @@ namespace eSya.UserCreation.DL.Repository
                 }
             }
         }
-        public void CreateUserPassword(int _userId )
+
+        #endregion
+
+        #region It is shifted to Gateway
+        public void CreateUserPassword(int _userId)
         {
             using (eSyaEnterprise db = new eSyaEnterprise())
             {
@@ -2575,17 +2579,17 @@ namespace eSya.UserCreation.DL.Repository
                         }
                         db.SaveChanges();
                         var _pas = new GtEuuspw()
-                            {
-                                UserId= _userId,
-                                EPasswd = Epass,
-                                LastPasswdDate = DateTime.Now,
-                                ActiveStatus = true,
-                                FormId ="0",
-                                CreatedBy = _userId,
-                                CreatedOn = DateTime.Now,
-                                CreatedTerminal = "GTPL"
+                        {
+                            UserId = _userId,
+                            EPasswd = Epass,
+                            LastPasswdDate = DateTime.Now,
+                            ActiveStatus = true,
+                            FormId = "0",
+                            CreatedBy = _userId,
+                            CreatedOn = DateTime.Now,
+                            CreatedTerminal = "GTPL"
 
-                            };
+                        };
                         db.GtEuuspws.Add(_pas);
                         db.SaveChanges();
                         var serialno = db.GtEuusphs.Select(x => x.SerialNumber).DefaultIfEmpty().Max() + 1;
@@ -2620,8 +2624,6 @@ namespace eSya.UserCreation.DL.Repository
             }
         }
         #endregion
-
-
     }
 }
 
