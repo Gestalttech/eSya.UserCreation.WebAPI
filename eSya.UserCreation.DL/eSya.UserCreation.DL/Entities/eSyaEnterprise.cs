@@ -478,6 +478,8 @@ namespace eSya.UserCreation.DL.Entities
 
                 entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
 
+                entity.Property(e => e.ESyaAuthentication).HasColumnName("eSyaAuthentication");
+
                 entity.Property(e => e.FormId)
                     .HasMaxLength(10)
                     .IsUnicode(false)

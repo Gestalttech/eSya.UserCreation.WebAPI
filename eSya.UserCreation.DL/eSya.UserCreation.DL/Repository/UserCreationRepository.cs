@@ -1968,6 +1968,7 @@ namespace eSya.UserCreation.DL.Repository
                             MobileNumber = u.MobileNumber,
                             IsdcodeWan=u.IsdcodeWan,
                             WhatsappNumber=u.WhatsappNumber,
+                            ESyaAuthentication=u.ESyaAuthentication,
                             ActiveStatus = u.ActiveStatus,
                         }).ToListAsync();
 
@@ -1998,6 +1999,7 @@ namespace eSya.UserCreation.DL.Repository
                             _locExist.MobileNumber = obj.MobileNumber;
                             _locExist.IsdcodeWan = obj.IsdcodeWan;
                             _locExist.WhatsappNumber = obj.WhatsappNumber;
+                            _locExist.ESyaAuthentication = obj.ESyaAuthentication;
                             _locExist.ActiveStatus = obj.ActiveStatus;
                             _locExist.ModifiedBy = obj.UserID;
                             _locExist.ModifiedOn = System.DateTime.Now;
@@ -2020,6 +2022,7 @@ namespace eSya.UserCreation.DL.Repository
                                         MobileNumber=obj.MobileNumber,
                                         IsdcodeWan=obj.IsdcodeWan,
                                         WhatsappNumber=obj.WhatsappNumber,
+                                        ESyaAuthentication= obj.ESyaAuthentication,
                                         ActiveStatus = obj.ActiveStatus,
                                         FormId = obj.FormID,
                                         CreatedBy = obj.UserID,

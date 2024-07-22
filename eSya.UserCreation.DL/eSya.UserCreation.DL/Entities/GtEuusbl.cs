@@ -13,6 +13,7 @@ namespace eSya.UserCreation.DL.Entities
         public string MobileNumber { get; set; } = null!;
         public int IsdcodeWan { get; set; }
         public string WhatsappNumber { get; set; } = null!;
+        public int ESyaAuthentication { get; set; }
         public bool ActiveStatus { get; set; }
         public string FormId { get; set; } = null!;
         public int CreatedBy { get; set; }
