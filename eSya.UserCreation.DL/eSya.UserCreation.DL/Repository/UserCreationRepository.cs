@@ -2518,6 +2518,7 @@ namespace eSya.UserCreation.DL.Repository
                                 UserId = userId,
                                 Otpnumber = OTP,
                                 OtpgeneratedDate = System.DateTime.Now,
+                                Otpsource = "User Creation OTP",
                                 UsageStatus = false,
                                 ActiveStatus = true,
                                 FormId = "0",
@@ -2531,6 +2532,7 @@ namespace eSya.UserCreation.DL.Repository
                         }
                         else
                         {
+                            userOtp.Otpsource = "User Creation OTP";
                             userOtp.Otpnumber = OTP;
                             userOtp.UsageStatus = false;
                             userOtp.ActiveStatus = true;

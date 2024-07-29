@@ -462,6 +462,11 @@ namespace eSya.UserCreation.DL.Entities
                 entity.Property(e => e.Otpnumber)
                     .HasMaxLength(20)
                     .HasColumnName("OTPNumber");
+
+                entity.Property(e => e.Otpsource)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("OTPSource");
             });
 
             modelBuilder.Entity<GtEuusbl>(entity =>
