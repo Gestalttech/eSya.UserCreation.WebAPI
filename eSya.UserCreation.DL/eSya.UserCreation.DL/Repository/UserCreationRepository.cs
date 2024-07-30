@@ -2436,6 +2436,7 @@ namespace eSya.UserCreation.DL.Repository
                                     if (usermaster != null && passwordmaster != null)
                                     {
                                         usermaster.LastPasswordUpdatedDate = DateTime.Now;
+                                        usermaster.LastActivityDate = System.DateTime.Now;
                                         await db.SaveChangesAsync();
                                     }
 
