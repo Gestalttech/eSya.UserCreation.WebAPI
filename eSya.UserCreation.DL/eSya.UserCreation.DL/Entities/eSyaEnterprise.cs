@@ -20,13 +20,16 @@ namespace eSya.UserCreation.DL.Entities
 
         public virtual DbSet<GtEbecul> GtEbeculs { get; set; } = null!;
         public virtual DbSet<GtEcapcd> GtEcapcds { get; set; } = null!;
+        public virtual DbSet<GtEcaprl> GtEcaprls { get; set; } = null!;
         public virtual DbSet<GtEcblpl> GtEcblpls { get; set; } = null!;
         public virtual DbSet<GtEcbsln> GtEcbslns { get; set; } = null!;
         public virtual DbSet<GtEcbsmn> GtEcbsmns { get; set; } = null!;
         public virtual DbSet<GtEccncd> GtEccncds { get; set; } = null!;
         public virtual DbSet<GtEcfmac> GtEcfmacs { get; set; } = null!;
+        public virtual DbSet<GtEcgwrl> GtEcgwrls { get; set; } = null!;
         public virtual DbSet<GtEcmamn> GtEcmamns { get; set; } = null!;
         public virtual DbSet<GtEcmnfl> GtEcmnfls { get; set; } = null!;
+        public virtual DbSet<GtEcprrl> GtEcprrls { get; set; } = null!;
         public virtual DbSet<GtEcsbmn> GtEcsbmns { get; set; } = null!;
         public virtual DbSet<GtEsdocd> GtEsdocds { get; set; } = null!;
         public virtual DbSet<GtEuubgr> GtEuubgrs { get; set; } = null!;
@@ -104,6 +107,40 @@ namespace eSya.UserCreation.DL.Entities
                 entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
 
                 entity.Property(e => e.ShortCode).HasMaxLength(15);
+            });
+
+            modelBuilder.Entity<GtEcaprl>(entity =>
+            {
+                entity.HasKey(e => new { e.RuleId, e.ProcessId });
+
+                entity.ToTable("GT_ECAPRL");
+
+                entity.Property(e => e.RuleId).HasColumnName("RuleID");
+
+                entity.Property(e => e.ProcessId).HasColumnName("ProcessID");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.FormId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("FormID");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.Notes).HasMaxLength(1000);
+
+                entity.Property(e => e.RuleDesc).HasMaxLength(500);
+
+                entity.HasOne(d => d.Process)
+                    .WithMany(p => p.GtEcaprls)
+                    .HasForeignKey(d => d.ProcessId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_GT_ECAPRL_GT_ECPRRL");
             });
 
             modelBuilder.Entity<GtEcblpl>(entity =>
@@ -272,6 +309,35 @@ namespace eSya.UserCreation.DL.Entities
                 entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<GtEcgwrl>(entity =>
+            {
+                entity.HasKey(e => e.GwruleId);
+
+                entity.ToTable("GT_ECGWRL");
+
+                entity.Property(e => e.GwruleId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("GWRuleID");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.FormId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("FormID");
+
+                entity.Property(e => e.Gwdesc)
+                    .HasMaxLength(75)
+                    .IsUnicode(false)
+                    .HasColumnName("GWDesc");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<GtEcmamn>(entity =>
             {
                 entity.HasKey(e => e.MainMenuId);
@@ -325,6 +391,37 @@ namespace eSya.UserCreation.DL.Entities
                     .HasForeignKey(d => d.MainMenuId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_GT_ECMNFL_GT_ECMAMN");
+            });
+
+            modelBuilder.Entity<GtEcprrl>(entity =>
+            {
+                entity.HasKey(e => e.ProcessId);
+
+                entity.ToTable("GT_ECPRRL");
+
+                entity.Property(e => e.ProcessId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ProcessID");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.FormId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("FormID");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.ProcessControl)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.Property(e => e.ProcessDesc).HasMaxLength(500);
             });
 
             modelBuilder.Entity<GtEcsbmn>(entity =>
