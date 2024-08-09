@@ -62,7 +62,11 @@ namespace eSya.UserCreation.DL.Repository
                         {
                             return new DO_ReturnParameter() { Status = false, StatusCode = "W0112", Message = string.Format(_localizer[name: "W0112"]) };
                         }
+                       
                         b_user.BlockSignIn = obj.BlockSignIn;
+                        b_user.UnsuccessfulAttempt = 0;
+                        b_user.LastActivityDate = DateTime.Now;
+                        b_user.LoginAttemptDate = DateTime.Now;
                         b_user.ModifiedBy = obj.ModifiedBy;
                         b_user.ModifiedOn = System.DateTime.Now;
                         b_user.ModifiedTerminal = obj.TerminalID;
