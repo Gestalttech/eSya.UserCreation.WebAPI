@@ -50,6 +50,7 @@ builder.Services.AddScoped<IeSignatureRepository, eSignatureRepository>();
 builder.Services.AddScoped<IBlockRepository, BlockRepository>();
 builder.Services.AddScoped<IAuthorizeRepository, AuthorizeRepository>();
 builder.Services.AddScoped<IDeActivateRepository, DeActivateRepository>();
+builder.Services.AddScoped<IApprovalRepository, ApprovalRepository>();
 builder.Services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
 
 

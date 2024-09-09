@@ -35,4 +35,14 @@ namespace eSya.UserCreation.DO
         public bool IsPinapplicable { get; set; }
         public string PincodePattern { get; set; }
     }
+    public class DO_ApprovalLevels
+    {
+        public int BusinessKey { get; set; }
+        public int FormId { get; set; }
+        public int ApprovalLevel { get; set; }
+        public bool ActiveStatus { get; set; }
+        public int UserID { get; set; }
+        public string TerminalID { get; set; }
+        public string? ApprovalLevelDesc { get; set; }
+    }
 }

@@ -21,11 +21,15 @@ namespace eSya.UserCreation.DL.Entities
         public virtual DbSet<GtEbecul> GtEbeculs { get; set; } = null!;
         public virtual DbSet<GtEcapcd> GtEcapcds { get; set; } = null!;
         public virtual DbSet<GtEcaprl> GtEcaprls { get; set; } = null!;
+        public virtual DbSet<GtEcapvd> GtEcapvds { get; set; } = null!;
+        public virtual DbSet<GtEcapvh> GtEcapvhs { get; set; } = null!;
+        public virtual DbSet<GtEcapvv> GtEcapvvs { get; set; } = null!;
         public virtual DbSet<GtEcblpl> GtEcblpls { get; set; } = null!;
         public virtual DbSet<GtEcbsln> GtEcbslns { get; set; } = null!;
         public virtual DbSet<GtEcbsmn> GtEcbsmns { get; set; } = null!;
         public virtual DbSet<GtEccncd> GtEccncds { get; set; } = null!;
         public virtual DbSet<GtEcfmac> GtEcfmacs { get; set; } = null!;
+        public virtual DbSet<GtEcfmpa> GtEcfmpas { get; set; } = null!;
         public virtual DbSet<GtEcgwrl> GtEcgwrls { get; set; } = null!;
         public virtual DbSet<GtEcmamn> GtEcmamns { get; set; } = null!;
         public virtual DbSet<GtEcmnfl> GtEcmnfls { get; set; } = null!;
@@ -34,6 +38,7 @@ namespace eSya.UserCreation.DL.Entities
         public virtual DbSet<GtEsdocd> GtEsdocds { get; set; } = null!;
         public virtual DbSet<GtEuubgr> GtEuubgrs { get; set; } = null!;
         public virtual DbSet<GtEuuotp> GtEuuotps { get; set; } = null!;
+        public virtual DbSet<GtEuusap> GtEuusaps { get; set; } = null!;
         public virtual DbSet<GtEuusbl> GtEuusbls { get; set; } = null!;
         public virtual DbSet<GtEuuse> GtEuuses { get; set; } = null!;
         public virtual DbSet<GtEuusgr> GtEuusgrs { get; set; } = null!;
@@ -141,6 +146,65 @@ namespace eSya.UserCreation.DL.Entities
                     .HasForeignKey(d => d.ProcessId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_GT_ECAPRL_GT_ECPRRL");
+            });
+
+            modelBuilder.Entity<GtEcapvd>(entity =>
+            {
+                entity.HasKey(e => new { e.BusinessKey, e.FormId, e.ApprovalLevel });
+
+                entity.ToTable("GT_ECAPVD");
+
+                entity.Property(e => e.FormId).HasColumnName("FormID");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<GtEcapvh>(entity =>
+            {
+                entity.HasKey(e => new { e.BusinessKey, e.FormId });
+
+                entity.ToTable("GT_ECAPVH");
+
+                entity.Property(e => e.FormId).HasColumnName("FormID");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<GtEcapvv>(entity =>
+            {
+                entity.HasKey(e => new { e.BusinessKey, e.FormId, e.ApprovalLevel, e.ValueFrom, e.EffectiveFrom });
+
+                entity.ToTable("GT_ECAPVV");
+
+                entity.Property(e => e.FormId).HasColumnName("FormID");
+
+                entity.Property(e => e.ValueFrom).HasColumnType("numeric(18, 6)");
+
+                entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.EffectiveTill).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.ValueTo).HasColumnType("numeric(18, 6)");
             });
 
             modelBuilder.Entity<GtEcblpl>(entity =>
@@ -299,6 +363,25 @@ namespace eSya.UserCreation.DL.Entities
                     .HasColumnName("ActionID");
 
                 entity.Property(e => e.ActionDesc).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<GtEcfmpa>(entity =>
+            {
+                entity.HasKey(e => new { e.FormId, e.ParameterId });
+
+                entity.ToTable("GT_ECFMPA");
+
+                entity.Property(e => e.FormId).HasColumnName("FormID");
+
+                entity.Property(e => e.ParameterId).HasColumnName("ParameterID");
 
                 entity.Property(e => e.CreatedOn).HasColumnType("datetime");
 
@@ -564,6 +647,25 @@ namespace eSya.UserCreation.DL.Entities
                     .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("OTPSource");
+            });
+
+            modelBuilder.Entity<GtEuusap>(entity =>
+            {
+                entity.HasKey(e => new { e.BusinessKey, e.FormId, e.UserId, e.ApprovalLevel });
+
+                entity.ToTable("GT_EUUSAP");
+
+                entity.Property(e => e.FormId).HasColumnName("FormID");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
             });
 
             modelBuilder.Entity<GtEuusbl>(entity =>
