@@ -808,6 +808,8 @@ namespace eSya.UserCreation.DL.Entities
                     .IsUnicode(false)
                     .HasColumnName("PhotoURL");
 
+                entity.Property(e => e.RejectionReason).HasMaxLength(250);
+
                 entity.Property(e => e.UserAuthenticatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.UserCreatedOn).HasColumnType("datetime");

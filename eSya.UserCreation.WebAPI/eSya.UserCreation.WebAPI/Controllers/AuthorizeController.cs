@@ -23,9 +23,9 @@ namespace eSya.UserCreation.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetUnAuthenticatedUsers()
+        public async Task<IActionResult> GetUnAuthenticatedUsers(string authenticate)
         {
-            var b_users = await _authorizeRepository.GetUnAuthenticatedUsers();
+            var b_users = await _authorizeRepository.GetUnAuthenticatedUsers(authenticate);
             return Ok(b_users);
         }
         /// <summary>
@@ -37,6 +37,38 @@ namespace eSya.UserCreation.WebAPI.Controllers
         {
             var msg = await _authorizeRepository.AuthenticateUser(obj);
             return Ok(msg);
+        }
+        /// <summary>
+        /// Update User Mater to Reject User
+        /// UI Reffered - User Authenticated
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> RejectUser(DO_Authorize obj)
+        {
+            var msg = await _authorizeRepository.RejectUser(obj);
+            return Ok(msg);
+        }
+        /// <summary>
+        /// Get All Un Authenticated Users List.
+        /// UI Reffered - User Authenticated
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetUserLinkedFormMenulist(int UserID, int UserGroup, int UserRole)
+        {
+            var b_users = await _authorizeRepository.GetUserLinkedFormMenulist(UserID, UserGroup, UserRole);
+            return Ok(b_users);
+        }
+        /// <summary>
+        /// Get All Un Authenticated Users List.
+        /// UI Reffered - User Authenticated
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetActionListByUserRole(int userID, int UserGroup, int UserRole, int formID)
+        {
+            var b_users = await _authorizeRepository.GetActionListByUserRole(userID, UserGroup, UserRole, formID);
+            return Ok(b_users);
         }
         #endregion
     }

@@ -52,8 +52,12 @@ namespace eSya.UserCreation.DO
         public string TerminalID { get; set; }
         //For Image
         public string? userimage { get; set; }
-
         public List<DO_eSyaParameter> l_userparameter { get; set; }
+        public int UserGroup { get; set; }
+        public int UserRole { get; set; }
+        public string? UserGroupDesc { get; set; }
+        public string? UserRoleDesc { get; set; }
+        public string? AuthenticStatus { get; set; }
 
         //public int UserID { get; set; }
         //public string LoginID { get; set; }

@@ -59,5 +59,4 @@ namespace eSya.UserCreation.DO
         public string View { get; set; }
     }
 
-
 }

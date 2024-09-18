@@ -9,7 +9,7 @@ namespace eSya.UserCreation.DL.Entities
         public int FormId { get; set; }
         public int UserId { get; set; }
         public int ApprovalLevel { get; set; }
-        public bool? ActiveStatus { get; set; }
+        public bool ActiveStatus { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedTerminal { get; set; } = null!;
