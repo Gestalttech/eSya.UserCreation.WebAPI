@@ -1421,31 +1421,53 @@ namespace eSya.UserCreation.DL.Repository
                                     }).Distinct().ToListAsync();
 
                     mn.l_FormMenu = await db.GtEcbsmns.Join(db.GtEcmnfls,
-                            lkey => new { lkey.MenuKey },
-                            ent => new { ent.MenuKey },
-                            (lkey, ent) => new { lkey, ent })
-                        .Where(x => x.lkey.BusinessKey == BusinessKey && x.lkey.ActiveStatus == true)
-                                    .Select(f => new DO_FormMenu()
-                                    {
-                                        MainMenuId = f.ent.MainMenuId,
-                                        MenuItemId = f.ent.MenuItemId,
-                                        FormId = f.ent.MenuKey,
-                                        FormNameClient = f.ent.FormNameClient,
-                                        FormIndex = f.ent.FormIndex
-                                    }).ToListAsync();
+                           lkey => new { lkey.MenuKey },
+                           ent => new { ent.MenuKey },
+                           (lkey, ent) => new { lkey, ent })
+                       .Where(x => x.lkey.BusinessKey == BusinessKey && x.lkey.ActiveStatus == true)
+                        .GroupJoin(db.GtEuusgrs.Where(x => x.BusinessKey == BusinessKey && x.UserGroup == UserGroup
+                        && x.UserRole == UserRole),
+                        m => new { m.ent.MenuKey },
+                        fm => new { fm.MenuKey },
+                        (m, fm) => new { m, fm })
+                        .SelectMany(z => z.fm.DefaultIfEmpty(),
+                        (a, b) => new DO_FormMenu()
+                        {
+                            MainMenuId = a.m.ent.MainMenuId,
+                            MenuItemId = a.m.ent.MenuItemId,
+                            FormId = a.m.ent.MenuKey,
+                            FormNameClient = a.m.ent.FormNameClient,
+                            FormIndex = a.m.ent.FormIndex,
+                            ActiveStatus = b == null ? false : b.ActiveStatus
+                        }).ToListAsync();
+                                  
 
-                    foreach (var obj in mn.l_FormMenu)
-                    {
-                        GtEuusgr getlocDesc = db.GtEuusgrs.Where(c => c.BusinessKey == BusinessKey && c.UserGroup == UserGroup && c.UserRole== UserRole && c.MenuKey == obj.FormId).FirstOrDefault();
-                        if (getlocDesc != null)
-                        {
-                            obj.ActiveStatus = getlocDesc.ActiveStatus;
-                        }
-                        else
-                        {
-                            obj.ActiveStatus = false;
-                        }
-                    }
+                    //mn.l_FormMenu = await db.GtEcbsmns.Join(db.GtEcmnfls,
+                    //        lkey => new { lkey.MenuKey },
+                    //        ent => new { ent.MenuKey },
+                    //        (lkey, ent) => new { lkey, ent })
+                    //    .Where(x => x.lkey.BusinessKey == BusinessKey && x.lkey.ActiveStatus == true)
+                    //                .Select(f => new DO_FormMenu()
+                    //                {
+                    //                    MainMenuId = f.ent.MainMenuId,
+                    //                    MenuItemId = f.ent.MenuItemId,
+                    //                    FormId = f.ent.MenuKey,
+                    //                    FormNameClient = f.ent.FormNameClient,
+                    //                    FormIndex = f.ent.FormIndex
+                    //                }).ToListAsync();
+
+                    //foreach (var obj in mn.l_FormMenu)
+                    //{
+                    //    GtEuusgr getlocDesc = db.GtEuusgrs.Where(c => c.BusinessKey == BusinessKey && c.UserGroup == UserGroup && c.UserRole== UserRole && c.MenuKey == obj.FormId).FirstOrDefault();
+                    //    if (getlocDesc != null)
+                    //    {
+                    //        obj.ActiveStatus = getlocDesc.ActiveStatus;
+                    //    }
+                    //    else
+                    //    {
+                    //        obj.ActiveStatus = false;
+                    //    }
+                    //}
                     return mn;
                 }
             }
