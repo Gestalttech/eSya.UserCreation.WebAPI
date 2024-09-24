@@ -133,7 +133,8 @@ namespace eSya.UserCreation.DL.Repository
                                       //FormId = f.pt.ent.MenuKey,
                                       FormId = f.pt.ent.FormId,
                                       FormNameClient = f.pt.ent.FormNameClient,
-                                      FormIndex = f.pt.ent.FormIndex
+                                      FormIndex = f.pt.ent.FormIndex,
+                                      ActiveStatus=true
                                   }).ToListAsync();
                     //here we need to get active status from approved table
                     //foreach (var obj in mn.l_FormMenu)
