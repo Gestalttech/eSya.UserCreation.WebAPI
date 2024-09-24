@@ -2264,33 +2264,51 @@ namespace eSya.UserCreation.DL.Repository
                                         MenuIndex = f.seg.MenuIndex,
                                         ParentID = f.seg.ParentId
                                     }).Distinct().ToListAsync();
+                    mn.l_FormMenu = await db.GtEuusgrs.Where(x=>x.BusinessKey==BusinessKey && x.UserGroup==UserGroup
+                    && x.UserRole==UserRole && x.ActiveStatus)
+                        .Join(db.GtEcmnfls,
+                           lkey => new { lkey.MenuKey },
+                           ent => new { ent.MenuKey },
+                           (lkey, ent) => new { lkey, ent })
+                       .Where(x => x.lkey.BusinessKey == BusinessKey && x.lkey.UserRole == UserRole && x.lkey.UserGroup == UserGroup && x.lkey.ActiveStatus == true)
+                                   .Select(f => new DO_FormMenu()
+                                   {
+                                       MainMenuId = f.ent.MainMenuId,
+                                       MenuItemId = f.ent.MenuItemId,
+                                       FormId = f.ent.MenuKey,
+                                       FormNameClient = f.ent.FormNameClient,
+                                       FormIndex = f.ent.FormIndex,
+                                       ActiveStatus=f.lkey.ActiveStatus
+                                   }).ToListAsync();
 
-                    mn.l_FormMenu = await db.GtEuusgrs.Join(db.GtEcmnfls,
-                            lkey => new { lkey.MenuKey },
-                            ent => new { ent.MenuKey },
-                            (lkey, ent) => new { lkey, ent })
-                        .Where(x => x.lkey.BusinessKey == BusinessKey && x.lkey.UserRole == UserRole && x.lkey.UserGroup == UserGroup && x.lkey.ActiveStatus == true)
-                                    .Select(f => new DO_FormMenu()
-                                    {
-                                        MainMenuId = f.ent.MainMenuId,
-                                        MenuItemId = f.ent.MenuItemId,
-                                        FormId = f.ent.MenuKey,
-                                        FormNameClient = f.ent.FormNameClient,
-                                        FormIndex = f.ent.FormIndex
-                                    }).ToListAsync();
+                
 
-                    foreach (var obj in mn.l_FormMenu)
-                    {
-                        GtEuusgr getlocDesc = db.GtEuusgrs.Where(c => c.BusinessKey == BusinessKey && c.UserGroup == UserGroup && c.UserRole == UserRole && c.MenuKey == obj.FormId).FirstOrDefault();
-                        if (getlocDesc != null)
-                        {
-                            obj.ActiveStatus = getlocDesc.ActiveStatus;
-                        }
-                        else
-                        {
-                            obj.ActiveStatus = false;
-                        }
-                    }
+                    //mn.l_FormMenu = await db.GtEuusgrs.Join(db.GtEcmnfls,
+                    //        lkey => new { lkey.MenuKey },
+                    //        ent => new { ent.MenuKey },
+                    //        (lkey, ent) => new { lkey, ent })
+                    //    .Where(x => x.lkey.BusinessKey == BusinessKey && x.lkey.UserRole == UserRole && x.lkey.UserGroup == UserGroup && x.lkey.ActiveStatus == true)
+                    //                .Select(f => new DO_FormMenu()
+                    //                {
+                    //                    MainMenuId = f.ent.MainMenuId,
+                    //                    MenuItemId = f.ent.MenuItemId,
+                    //                    FormId = f.ent.MenuKey,
+                    //                    FormNameClient = f.ent.FormNameClient,
+                    //                    FormIndex = f.ent.FormIndex
+                    //                }).ToListAsync();
+
+                    //foreach (var obj in mn.l_FormMenu)
+                    //{
+                    //    GtEuusgr getlocDesc = db.GtEuusgrs.Where(c => c.BusinessKey == BusinessKey && c.UserGroup == UserGroup && c.UserRole == UserRole && c.MenuKey == obj.FormId).FirstOrDefault();
+                    //    if (getlocDesc != null)
+                    //    {
+                    //        obj.ActiveStatus = getlocDesc.ActiveStatus;
+                    //    }
+                    //    else
+                    //    {
+                    //        obj.ActiveStatus = false;
+                    //    }
+                    //}
                     return mn;
                 }
             }
