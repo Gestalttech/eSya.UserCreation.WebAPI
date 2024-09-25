@@ -60,7 +60,7 @@ namespace eSya.UserCreation.DL.Repository
                         UserAuthenticatedDate = (DateTime)r.cg.mg.u.UserAuthenticatedDate,
                         UserGroup = r.cg.mg.g.UserGroup,
                         UserRole = r.cg.mg.g.UserRole,
-                        AuthenticStatus= "Authentic",
+                        AuthenticStatus= "Approved",
                         UserGroupDesc=r.cg.g.CodeDesc,
                         UserRoleDesc=r.c.CodeDesc
 
@@ -140,7 +140,7 @@ namespace eSya.UserCreation.DL.Repository
                                                UserAuthenticatedDate = (DateTime)r.cg.mg.u.UserAuthenticatedDate,
                                                UserGroup = r.cg.mg.g.UserGroup,
                                                UserRole = r.cg.mg.g.UserRole,
-                                               AuthenticStatus = "Un Authentic",
+                                               AuthenticStatus = "Un-Approved",
                                                UserGroupDesc = r.cg.g.CodeDesc,
                                                UserRoleDesc = r.c.CodeDesc
 
